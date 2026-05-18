@@ -45,5 +45,4 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 
-    // Mongodb username:   alamrabiul889_db_user
-    //        password:    ituxr9WbcqSq1lwF
+   
