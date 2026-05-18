@@ -1,8 +1,15 @@
-const express = require('express');
-const router = express.Router();
+ const express = require('express');
+ const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({ message: 'Booking routes working' });
-});
+ const { 
+    createBooking, 
+    getMyBookings, 
+    cancelBooking 
+ } = require('../controllers/bookingController');
+ const authMiddleware = require('../middleware/authMiddleware');
 
-module.exports = router;
+ router.post('/', authMiddleware, createBooking);
+ router.get('/my-bookings', authMiddleware, getMyBookings);
+ router.patch('/:id/cancel', authMiddleware, cancelBooking);
+
+ module.exports = router;

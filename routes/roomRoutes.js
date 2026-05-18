@@ -1,8 +1,23 @@
-const express = require('express');
-const router = express.Router();
+ const express = require('express');
+ const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({ message: 'Room routes working' });
-});
+ const {
+    getAllRooms,
+    getLatestRooms,
+    getRoomById,
+    addRoom,
+    updateRoom,
+    deleteRoom,
+    getMyListings
+ } = require('../controllers/roomController');
+ const authMiddleware = require('../middleware/authMiddleware');
 
-module.exports = router;
+ router.get('/', getAllRooms);
+ router.get('/latest', getLatestRooms);
+ router.get('/my-listings', authMiddleware, getMyListings);
+ router.get('/:id', getRoomById);
+ router.post('/', authMiddleware, addRoom);
+ router.put('/:id', authMiddleware, updateRoom);
+ router.delete('/:id', authMiddleware, deleteRoom);
+
+ module.exports = router;

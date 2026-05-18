@@ -1,8 +1,30 @@
-const express = require('express');
-const router = express.Router();
+ const express = require('express');
+ const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({ message: 'Auth routes working' });
-});
+ const { 
 
-module.exports = router;
+    register, 
+
+    login, 
+
+    googleLogin, 
+
+    logout, 
+
+    getMe 
+
+ } = require('../controllers/authController');
+
+ const authMiddleware = require('../middleware/authMiddleware');
+
+ router.post('/register', register);
+
+ router.post('/login', login);
+
+ router.post('/google', googleLogin);
+
+ router.post('/logout', logout);
+
+ router.get('/me', authMiddleware, getMe);
+
+ module.exports = router;
