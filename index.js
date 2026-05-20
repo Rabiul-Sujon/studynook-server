@@ -42,20 +42,13 @@ if (process.env.CLIENT_URL) {
 }
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
 }));
 
-app.options('*', cors());
+app.options(/(.*)/, cors());
 
 
 
