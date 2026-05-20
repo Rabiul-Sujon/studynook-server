@@ -41,13 +41,22 @@ if (process.env.CLIENT_URL) {
     allowedOrigins.push(process.env.CLIENT_URL);
 }
 
-app.use(cors({
+// app.use(cors({
+//     origin: allowedOrigins,
+//     credentials: true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+// }));
+
+// configuration into a single variable
+const corsOptions = {
     origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
-}));
-
+};
+// Pass that variable into both places
+app.use(cors(corsOptions));
 app.options(/(.*)/, cors());
 
 
