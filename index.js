@@ -17,16 +17,45 @@ const PORT = process.env.PORT || 5000;
 //          'http://localhost:5173'],
 //     credentials: true
 // }));
-     app.use(cors({
-     origin: [
-        'http://localhost:5173',
-        'https://studynook-client-beryl.vercel.app',
-        process.env.CLIENT_URL
-     ],
-     credentials: true,
-     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
-     }));
+
+// =============================================
+    //  app.use(cors({
+    //  origin: [
+    //     'http://localhost:5173',
+    //     'https://studynook-client-beryl.vercel.app',
+    //     process.env.CLIENT_URL
+    //  ],
+    //  credentials: true,
+    //  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    //  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    //  }));
+    // ============================================================
+
+    const allowedOrigins = [
+    'http://localhost:5173',
+    'https://studynook-client-beryl.vercel.app',
+    'https://studynook-client-alamrabiul889-1414s-projects.vercel.app' 
+];
+
+if (process.env.CLIENT_URL) {
+    allowedOrigins.push(process.env.CLIENT_URL);
+}
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+}));
+
+app.options('*', cors());
 
 
 

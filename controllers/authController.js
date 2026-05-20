@@ -15,8 +15,10 @@ const generateToken = (userId) => {
 const setCookie = (res, token) => {
     res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        // secure: process.env.NODE_ENV === 'production',
+        secure:true,
+        // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        sameSite:'none',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 };
@@ -130,8 +132,17 @@ const googleLogin = async (req, res) => {
 };
 
 // Logout
+// const logout = (req, res) => {
+//     res.clearCookie('token');
+//     res.status(200).json({ message: 'Logged out successfully.' });
+// };
+
 const logout = (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+    });
     res.status(200).json({ message: 'Logged out successfully.' });
 };
 
