@@ -57,7 +57,7 @@ const corsOptions = {
 };
 // Pass that variable into both places
 app.use(cors(corsOptions));
-app.options(/(.*)/, cors());
+app.options(/(.*)/, cors(corsOptions));
 
 
 
