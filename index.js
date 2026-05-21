@@ -11,6 +11,9 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+
+app.set('trust proxy', 1);
+
 // Middleware
 // app.use(cors({
 //     origin: [process.env.CLIENT_URL,
